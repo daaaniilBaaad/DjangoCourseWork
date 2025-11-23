@@ -1,0 +1,36 @@
+{% extends 'mailsendler/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4 text-center">Статистика рассылок</h1>
+
+    <div class="row g-4">
+
+        <!-- Всего рассылок -->
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-3">
+                <h5 class="card-title">Всего рассылок</h5>
+                <div class="display-5 fw-bold text-success">{{ total_mailings }}</div>
+            </div>
+        </div>
+
+        <!-- Активных рассылок -->
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-3">
+                <h5 class="card-title">Активные рассылки</h5>
+                <div class="display-5 fw-bold text-success">{{ active_mailings }}</div>
+            </div>
+        </div>
+
+        <!-- Уникальных получателей -->
+        <div class="col-md-4">
+            <div class="card shadow-sm text-center p-3">
+                <h5 class="card-title">Уникальных получателей</h5>
+                <div class="display-5 fw-bold text-success">{{ unique_getters }}</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'mailsendler/base.html' %}
+{% block title %}Форма рассылки{% endblock %}
+
+{% block content %}
+<h1>Форма рассылки</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Сохранить</button>
+    <a href="{% url 'mailsendler:mailing_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}
