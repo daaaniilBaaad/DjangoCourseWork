@@ -28,4 +28,9 @@ urlpatterns = [
     # Пользователи (только staff)
     path("users/", views.UsersListView.as_view(), name="users_list"),
     path("users/<int:user_id>/block/", views.BlockUserView.as_view(), name="block_user"),
+
+    path("messages/", views.MessageListView.as_view(), name="message_list"),
+    path("messages/create/", views.MessageCreateView.as_view(), name="message_create"),
+    path("messages/<int:pk>/update/", views.MessageUpdateView.as_view(), name="message_update"),
+    path("messages/<int:pk>/delete/", views.MessageDeleteView.as_view(), name="message_delete"),
 ]

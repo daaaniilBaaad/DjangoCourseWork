@@ -15,6 +15,7 @@
 
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto">
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'mailsendler:mailing_list' %}">Рассылки</a>
                 </li>
@@ -26,10 +27,19 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'mailsendler:mailing_attempts' %}">Попытки</a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'mailsendler:message_list' %}">Сообщения</a>
+                </li>
+
             </ul>
 
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users:profile' %}">Профиль</a>
+                </li>
 
                 <li class="nav-item d-flex align-items-center">
                     <form action="{% url 'users:logout' %}" method="post" class="m-0 p-0">

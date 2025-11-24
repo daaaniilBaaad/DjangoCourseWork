@@ -9,10 +9,10 @@ from django.views.generic import (
 from mailsendler.models import (
     MailMailing as Mailing,
     MailGetter as Getter,
-    MailAttempt as MailingAttempt, MailGetter,
+    MailAttempt as MailingAttempt, MailGetter, MailMessage, MailMailing,
 )
 from users.models import User
-from mailsendler.forms import MailMailingForm, MailGetterForm
+from mailsendler.forms import MailMailingForm, MailGetterForm, MailMessageForm
 from django.utils import timezone
 
 
@@ -238,3 +238,46 @@ class BlockUserView(LoginRequiredMixin, View):
         user.save()
 
         return redirect('users:users_list')
+
+
+class MessageListView(LoginRequiredMixin, ListView):
+    model = MailMessage
+    template_name = 'mailsendler/message_list.html'
+
+    def get_queryset(self):
+        return MailMessage.objects.filter(owner=self.request.user)
+
+
+class MessageCreateView(LoginRequiredMixin, CreateView):
+    model = MailMessage
+    form_class = MailMessageForm
+    template_name = 'mailsendler/message_form.html'
+    success_url = reverse_lazy('mailsendler:message_list')
+
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
+    model = MailMessage
+    form_class = MailMessageForm
+    template_name = 'mailsendler/message_form.html'
+    success_url = reverse_lazy('mailsendler:message_list')
+
+
+class MessageDeleteView(LoginRequiredMixin, DeleteView):
+    model = MailMessage
+    template_name = 'mailsendler/message_confirm_delete.html'
+    success_url = reverse_lazy('mailsendler:message_list')
+
+
+class MainPageView(TemplateView):
+    template_name = 'mailsendler/main_page.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['mailing_count'] = MailMailing.objects.count()
+        context['active_mailings'] = MailMailing.objects.filter(status='running').count()
+        context['unique_clients'] = MailGetter.objects.count()
+        context['messages_count'] = MailMessage.objects.count()

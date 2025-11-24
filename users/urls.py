@@ -9,7 +9,7 @@ from .views import (
     UserPasswordResetView,
     UserPasswordResetDoneView,
     UserPasswordResetConfirmView,
-    UserPasswordResetCompleteView,
+    UserPasswordResetCompleteView, UserProfileView, UserProfileUpdateView,
 )
 
 app_name = "users"
@@ -20,6 +20,8 @@ urlpatterns = [
     path("logout/", UserLogoutView.as_view(), name="logout"),
     path("email-confirm/<str:token>/", email_verification, name="email_confirm"),
     path("block/<int:user_id>/", views.toggle_user_block, name="toggle_block"),
+    path("profile/", UserProfileView.as_view(), name="profile"),
+    path("profile/edit/", UserProfileUpdateView.as_view(), name="profile_edit"),
 
     # Сброс пароля
     path("password-reset/", UserPasswordResetView.as_view(), name="password_reset"),

@@ -14,10 +14,10 @@
         </tr>
     </thead>
     <tbody>
-        {% for mailing in mailings %}
+        {% for mailing in object_list %}
         <tr>
-            <td>{{ mailing.name }}</td>
-            <td>{{ mailing.subject }}</td>
+            <td>{{ mailing.message.subject }}</td>
+            <td>{{ mailing.message.body }}</td>
             <td>{{ mailing.get_status_display }}</td>
             <td>
                 <a href="{% url 'mailsendler:edit_mailing' mailing.pk %}" class="btn btn-sm btn-warning">Редактировать</a>

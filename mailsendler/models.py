@@ -9,6 +9,11 @@ class MailGetter(models.Model): # Модель «Получатель рассы
     full_name = models.CharField(max_length=255, verbose_name='Ф. И. О.')
     comment = models.TextField(blank=True, verbose_name='Комментарий')
 
+    class Meta:
+        permissions = [
+            ("view_all_clients", "Может просматривать всех клиентов")
+        ]
+
     def __str__(self):
         return self.email
 
@@ -17,6 +22,11 @@ class MailMessage(models.Model): # Модель «Сообщение»
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Владелец')
     subject = models.CharField(max_length=255, verbose_name='Тема письма')
     body = models.TextField(verbose_name='Текст письма')
+
+    class Meta:
+        permissions = [
+            ("view_all_messages", "Может просматривать все сообщения")
+        ]
 
     def __str__(self):
         return self.subject
@@ -44,6 +54,12 @@ class MailMailing(models.Model): # Модель «Рассылка»
 
     message = models.ForeignKey(MailMessage, on_delete=models.CASCADE)
     getters = models.ManyToManyField(MailGetter)
+
+    class Meta:
+        permissions = [
+            ("view_all_mailings", "Может просматривать все рассылки"),
+            ("dasable_mailings", "Может отключать чужие рассылки")
+        ]
 
     def __str__(self):
         return f'Рассылка #{self.id} - {self.get_status_display()}'

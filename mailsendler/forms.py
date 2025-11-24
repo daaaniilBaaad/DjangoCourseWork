@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import BooleanField
-from .models import MailMailing, MailGetter
+from .models import MailMailing, MailGetter, MailMessage
 
 
 class StyleFormMixin:
@@ -26,6 +26,11 @@ class MailGetterForm(StyleFormMixin, forms.ModelForm):
         model = MailGetter
         fields = ['email', 'full_name', 'comment']  # указать реальные поля модели
 
+
+class MailMessageForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = MailMessage
+        fields = ['subject', 'body']
 
 BANNED_WORDS = [
     'казино', 'криптовалюта', 'крипта', 'биржа',
