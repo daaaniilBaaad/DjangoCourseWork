@@ -1,0 +1,20 @@
+{% extends 'mailsendler/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if form.instance.pk %}
+        <h1 class="mb-4">Редактировать сообщение</h1>
+    {% else %}
+        <h1 class="mb-4">Создать сообщение</h1>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn {% if form.instance.pk %}btn-primary{% else %}btn-success{% endif %}">
+            Сохранить
+        </button>
+        <a href="{% url 'mailsendler:message_list' %}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}
