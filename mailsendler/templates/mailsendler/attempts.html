@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Попытки рассылок</title>
+
+    <link rel="stylesheet" href="{% static 'mailsendler/css/bootstrap.min.css' %}">
+</head>
+<body>
+
+<div class="container mt-4">
+
+    <h1 class="mb-4">Попытки рассылок</h1>
+
+    {% if attempts %}
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered align-middle">
+                <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Дата и время</th>
+                    <th>Статус</th>
+                    <th>Ответ почтового сервера</th>
+                    <th>Рассылка</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for attempt in attempts %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ attempt.attempt_time|date:"d.m.Y H:i" }}</td>
+                        <td>
+                            {% if attempt.status == 'Успешно' %}
+                                <span class="badge bg-success">Успешно</span>
+                            {% else %}
+                                <span class="badge bg-danger">Не успешно</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ attempt.server_response|default:"—" }}</td>
+                        <td>{{ attempt.mailing.message.subject }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    {% else %}
+        <div class="alert alert-warning">
+            Попыток рассылок пока нет.
+        </div>
+    {% endif %}
+
+</div>
+
+<script src="{% static 'mailsendler/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
